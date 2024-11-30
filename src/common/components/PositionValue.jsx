@@ -97,6 +97,14 @@ const PositionValue = ({ position, property, attribute }) => {
     }
   };
 
+  if (key === 'address') {
+    return <AddressValue latitude={position.latitude} longitude={position.longitude} originalAddress={value} />;
+  }
+
+  if (value === undefined || value === null) {
+    return '';
+  }
+
   switch (key) {
     case 'image':
     case 'video':
@@ -111,23 +119,12 @@ const PositionValue = ({ position, property, attribute }) => {
           {!deviceReadonly && <Link component={RouterLink} underline="none" to={`/settings/accumulators/${position.deviceId}`}>&#9881;</Link>}
         </>
       );
-    case 'address':
-      return <AddressValue latitude={position.latitude} longitude={position.longitude} originalAddress={value} />;
     case 'network':
-      if (value) {
-        return <Link component={RouterLink} underline="none" to={`/network/${position.id}`}>{t('sharedInfoTitle')}</Link>;
-      }
-      return '';
+      return <Link component={RouterLink} underline="none" to={`/network/${position.id}`}>{t('sharedInfoTitle')}</Link>;
     case 'geofenceIds':
-      if (value) {
-        return <GeofencesValue geofenceIds={value} />;
-      }
-      return '';
+      return <GeofencesValue geofenceIds={value} />;
     case 'driverUniqueId':
-      if (value) {
-        return <DriverValue driverUniqueId={value} />;
-      }
-      return '';
+      return <DriverValue driverUniqueId={value} />;
     default:
       return formatValue(value);
   }
