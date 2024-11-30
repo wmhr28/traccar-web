@@ -246,9 +246,9 @@ const StatusCard = ({ deviceId, position, onClose, disableActions, desktopPaddin
               <div className={classes.header}>
                 <Typography variant="body2" color="textSecondary">
                   {device.name}
-
                 </Typography>
-                {position.attributes.hasOwnProperty('alarm') && (
+
+                {position && position.attributes.hasOwnProperty('alarm') && (
                   <Tooltip title={`${t('eventAlarm')}: ${formatAlarm(position.attributes.alarm, t)}`}>
                     <IconButton size="small">
                       <ErrorIcon fontSize="small" className={classes.error} />

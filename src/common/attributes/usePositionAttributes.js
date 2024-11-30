@@ -377,4 +377,16 @@ export default (t) => useMemo(() => ({
     name: t('positionAudio'),
     type: 'string',
   },
+  motorField: {
+    name: t('positionMotorField'),
+    type: 'string',
+  },
+  doorField: {
+    name: t('positionDoorField'),
+    type: 'string',
+  },
+  networkTypeField: {
+    name: t('positionNetworkTypeField'),
+    type: 'string',
+  },
 }), [t]);
