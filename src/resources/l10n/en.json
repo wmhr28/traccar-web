@@ -609,5 +609,12 @@
     "categoryVan": "Van",
     "categoryScooter": "Scooter",
     "maintenanceStart": "Start",
-    "maintenancePeriod": "Period"
+    "maintenancePeriod": "Period",
+    "positionDoorField":"Door",
+    "doorValueTrue":"Open",
+    "doorValueFalse":"Closed",
+    "positionMotorField":"Motor",
+    "motorValueTrue":"Lock",
+    "motorValueFalse":"Unlock",    
+    "positionNetworkTypeField":"Network Type"
 }

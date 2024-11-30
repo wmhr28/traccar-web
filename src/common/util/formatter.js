@@ -154,3 +154,11 @@ export const formatNotificationTitle = (t, notification, includeId) => {
   }
   return title;
 };
+export const formatFieldTranslation = (value, t) => {
+  if (value) {
+    return value.split(',')
+      .map((valueField) => t(valueField))
+      .join(', ');
+  }
+  return '';
+};

@@ -609,5 +609,12 @@
     "categoryVan": "Furgoneta",
     "categoryScooter": "Moto",
     "maintenanceStart": "Iniciar",
-    "maintenancePeriod": "Período"
+    "maintenancePeriod": "Período",
+    "positionDoorField":"Puerta",
+    "doorValueTrue":"Abierta",
+    "doorValueFalse":"Cerrada",
+    "positionMotorField":"Motor",
+    "motorValueTrue":"Bloqueado",
+    "motorValueFalse":"Desbloqueado",    
+    "positionNetworkTypeField":"Tipo de Red"
 }
