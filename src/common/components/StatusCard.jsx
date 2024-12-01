@@ -14,7 +14,6 @@ import {
   TableCell,
   Menu,
   MenuItem,
-  CardMedia,
   Link,
   Tooltip,
 } from '@mui/material';
@@ -30,11 +29,12 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { useTranslation } from './LocalizationProvider';
 import RemoveDialog from './RemoveDialog';
 import PositionValue from './PositionValue';
-import { useDeviceReadonly } from '../util/permissions';
+import { useDeviceReadonly, useAdministrator } from '../util/permissions';
 import usePositionAttributes from '../attributes/usePositionAttributes';
 import { devicesActions } from '../../store';
 import { useCatch, useCatchCallback } from '../../reactHelper';
 import { useAttributePreference } from '../util/preferences';
+
 import {
   formatAlarm,
 } from '../util/formatter';
@@ -184,8 +184,7 @@ const StatusCard = ({ deviceId, position, onClose, disableActions, desktopPaddin
   const shareDisabled = useSelector((state) => state.session.server.attributes.disableShare);
   const user = useSelector((state) => state.session.user);
   const device = useSelector((state) => state.devices.items[deviceId]);
-
-  const deviceImage = device?.attributes?.deviceImage;
+  const admin = useAdministrator();
 
   const positionAttributes = usePositionAttributes(t);
 
@@ -263,12 +262,6 @@ const StatusCard = ({ deviceId, position, onClose, disableActions, desktopPaddin
                   <CloseIcon fontSize="small" />
                 </IconButton>
               </div>
-              {deviceImage && (
-                <CardMedia
-                  className={classes.media}
-                  image={`/api/media/${device.uniqueId}/${deviceImage}`}
-                />
-              )}
               {position && (
                 <CardContent className={classes.content} sx={{ paddingTop: 0, paddingBottom: 1, paddingLeft: 1, paddingRight: 1 }}>
                   <Table>
@@ -299,44 +292,46 @@ const StatusCard = ({ deviceId, position, onClose, disableActions, desktopPaddin
                   </Card>
                 </CardContent>
               )}
-              <CardActions classes={{ root: classes.actions }} disableSpacing>
-                <IconButton
-                  color="secondary"
-                  onClick={(e) => setAnchorEl(e.currentTarget)}
-                  disabled={!position}
-                >
-                  <PendingIcon />
-                </IconButton>
-                <IconButton
-                  onClick={() => navigate('/replay')}
-                  disabled={disableActions || !position}
-                >
-                  <ReplayIcon />
-                </IconButton>
-                <IconButton
-                  onClick={() => navigate(`/settings/device/${deviceId}/command`)}
-                  disabled={disableActions}
-                >
-                  <PublishIcon />
-                </IconButton>
-                {!deviceReadonly && (
-                  <>
-                    <IconButton
-                      onClick={() => navigate(`/settings/device/${deviceId}`)}
-                      disabled={disableActions || deviceReadonly}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      onClick={() => setRemoving(true)}
-                      disabled={disableActions || deviceReadonly}
-                      className={classes.delete}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </>
-                )}
-              </CardActions>
+              {admin && (
+                <CardActions classes={{ root: classes.actions }} disableSpacing>
+                  <IconButton
+                    color="secondary"
+                    onClick={(e) => setAnchorEl(e.currentTarget)}
+                    disabled={!position}
+                  >
+                    <PendingIcon />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => navigate('/replay')}
+                    disabled={disableActions || !position}
+                  >
+                    <ReplayIcon />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => navigate(`/settings/device/${deviceId}/command`)}
+                    disabled={disableActions}
+                  >
+                    <PublishIcon />
+                  </IconButton>
+                  {!deviceReadonly && (
+                    <>
+                      <IconButton
+                        onClick={() => navigate(`/settings/device/${deviceId}`)}
+                        disabled={disableActions || deviceReadonly}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        onClick={() => setRemoving(true)}
+                        disabled={disableActions || deviceReadonly}
+                        className={classes.delete}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </>
+                  )}
+                </CardActions>
+              )}
             </Card>
           </Draggable>
         )}
