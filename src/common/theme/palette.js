@@ -8,13 +8,13 @@ export default (server, darkMode) => ({
     default: darkMode ? grey[900] : grey[50],
   },
   primary: {
-    main: validatedColor(server?.attributes?.colorPrimary) || (darkMode ? indigo[400] : indigo[900]),
+    main: '#081d69' || (darkMode ? indigo[400] : indigo[900]),
   },
   secondary: {
-    main: validatedColor(server?.attributes?.colorSecondary) || (darkMode ? indigo[400] : indigo[800]),
+    main: '#204291' || (darkMode ? indigo[400] : indigo[800]),
   },
   neutral: {
-    main: grey[500],
+    main: '#828282',
   },
   geometry: {
     main: '#3bb2d0',

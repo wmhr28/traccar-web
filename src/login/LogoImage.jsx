@@ -7,11 +7,15 @@ import Logo from '../resources/images/logo.svg?react';
 const useStyles = makeStyles((theme) => ({
   image: {
     alignSelf: 'center',
-    maxWidth: '250px',
-    maxHeight: '250px',
+    maxWidth: '392px',
     width: 'auto',
     height: 'auto',
     margin: theme.spacing(2),
+    [theme.breakpoints.down('lg')]: {
+      margin: theme.spacing(2),
+      marginBottom: theme.spacing(5),
+      maxWidth: '250px',
+    },
   },
 }));
 
@@ -22,7 +26,7 @@ const LogoImage = ({ color }) => {
   const expanded = !useMediaQuery(theme.breakpoints.down('lg'));
 
   const logo = useSelector((state) => state.session.server.attributes?.logo);
-  const title = useSelector((state) => state.session.server.attributes?.title);
+
   const logoInverted = useSelector((state) => state.session.server.attributes?.logoInverted);
 
   if (logo) {
@@ -32,10 +36,7 @@ const LogoImage = ({ color }) => {
     return <img className={classes.image} src={logo} alt="" />;
   }
   return (
-    <>
-      <h1 style={{ color, textAlign: 'center', margin: 0 }}>{title}</h1>
-      <Logo className={classes.image} style={{ color }} />
-    </>
+    <Logo className={classes.image} style={{ color }} />
   );
 };
 

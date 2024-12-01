@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import {
-  useMediaQuery, Select, MenuItem, FormControl, Button, TextField, Link, Snackbar, IconButton, Tooltip, Box,
+  Select, MenuItem, FormControl, Button, TextField, Link, Snackbar, IconButton, Tooltip, Box,
+  InputAdornment,
 } from '@mui/material';
 import ReactCountryFlag from 'react-country-flag';
 import makeStyles from '@mui/styles/makeStyles';
@@ -15,9 +16,11 @@ import { useLocalization, useTranslation } from '../common/components/Localizati
 import LoginLayout from './LoginLayout';
 import usePersistedState from '../common/util/usePersistedState';
 import { handleLoginTokenListeners, nativeEnvironment, nativePostMessage } from '../common/components/NativeInterface';
-import LogoImage from './LogoImage';
 import { useCatch } from '../reactHelper';
 import Loader from '../common/components/Loader';
+
+import UserIcon from '@mui/icons-material/PersonOutline';
+import PasswordIcon from '@mui/icons-material/LockOutlined';
 
 const useStyles = makeStyles((theme) => ({
   options: {
@@ -46,6 +49,28 @@ const useStyles = makeStyles((theme) => ({
   link: {
     cursor: 'pointer',
   },
+  iconInput: {
+    color: '#fff',
+  },
+  inputProps: {
+    marginBottom: theme.spacing(2) + ' !important',
+
+    '& .MuiInputBase-root': {
+      background: '#204291 !important',
+      '&:hover': {
+        background: '#204291',
+      },
+    },
+    '& .MuiFormLabel-root': {
+      color: theme.palette.primary.main,
+      top: '-20px',
+      marginLeft: '35px',
+    },
+    '& .MuiInputBase-input': {
+      background: '#EBF0FE !important',
+    },
+  },
+
 }));
 
 const LoginPage = () => {
@@ -173,7 +198,7 @@ const LoginPage = () => {
         )}
       </div>
       <div className={classes.container}>
-        {useMediaQuery(theme.breakpoints.down('lg')) && <LogoImage color={theme.palette.primary.main} />}
+
         <TextField
           required
           error={failed}
@@ -183,7 +208,15 @@ const LoginPage = () => {
           autoComplete="email"
           autoFocus={!email}
           onChange={(e) => setEmail(e.target.value)}
-          helperText={failed && 'Invalid username or password'}
+          className={classes.inputProps}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start" sx={{}}>
+                <UserIcon className={classes.iconInput} />
+              </InputAdornment>
+            ),
+          }}
+          variant="filled"
         />
         <TextField
           required
@@ -193,8 +226,18 @@ const LoginPage = () => {
           value={password}
           type="password"
           autoComplete="current-password"
+          helperText={failed && t('loginFailed')}
           autoFocus={!!email}
           onChange={(e) => setPassword(e.target.value)}
+          className={classes.inputProps}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <PasswordIcon className={classes.iconInput} />
+              </InputAdornment>
+            ),
+          }}
+          variant="filled"
         />
         {codeEnabled && (
           <TextField
@@ -211,7 +254,7 @@ const LoginPage = () => {
           onClick={handlePasswordLogin}
           type="submit"
           variant="contained"
-          color="secondary"
+          color="primary"
           disabled={!email || !password || (codeEnabled && !code)}
         >
           {t('loginLogin')}
@@ -241,9 +284,9 @@ const LoginPage = () => {
               onClick={() => navigate('/reset-password')}
               className={classes.link}
               underline="none"
-              variant="caption"
+              variant="subtitle2"
             >
-              {t('loginReset')}
+              {t('loginResetHeader')}
             </Link>
           )}
         </div>
