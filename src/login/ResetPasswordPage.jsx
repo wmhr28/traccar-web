@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Button, TextField, Typography, Snackbar, IconButton,
+  Button, TextField, Typography, Snackbar, IconButton, InputAdornment,
 } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { useTranslation } from '../common/components/LocalizationProvider';
 import useQuery from '../common/util/useQuery';
 import { snackBarDurationShortMs } from '../common/util/duration';
 import { useCatch } from '../reactHelper';
+import UserIcon from '@mui/icons-material/PersonOutline';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -26,6 +27,27 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 500,
     marginLeft: theme.spacing(1),
     textTransform: 'uppercase',
+  },
+  iconInput: {
+    color: '#fff',
+  },
+  inputProps: {
+    marginBottom: theme.spacing(2) + ' !important',
+
+    '& .MuiInputBase-root': {
+      background: '#204291 !important',
+      '&:hover': {
+        background: '#204291',
+      },
+    },
+    '& .MuiFormLabel-root': {
+      color: theme.palette.primary.main,
+      top: '-20px',
+      marginLeft: '35px',
+    },
+    '& .MuiInputBase-input': {
+      background: '#EBF0FE !important',
+    },
   },
 }));
 
@@ -70,7 +92,7 @@ const ResetPasswordPage = () => {
             <ArrowBackIcon />
           </IconButton>
           <Typography className={classes.title} color="primary">
-            {t('loginReset')}
+            {t('loginResetHeader')}
           </Typography>
         </div>
         {!token ? (
@@ -82,6 +104,15 @@ const ResetPasswordPage = () => {
             value={email}
             autoComplete="email"
             onChange={(event) => setEmail(event.target.value)}
+            className={classes.inputProps}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start" sx={{}}>
+                  <UserIcon className={classes.iconInput} />
+                </InputAdornment>
+              ),
+            }}
+            variant="filled"
           />
         ) : (
           <TextField
